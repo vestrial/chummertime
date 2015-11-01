@@ -1,3 +1,40 @@
+Timescale = function (events) {
+    this.entries = events;
+    var format = d3.time.format("%Y-%m-%d");
+    this.maxDate = function () {
+        return d3.max(this.entries, function (entry) {
+            return format.parse(entry.date);
+        });
+    };
+    this.minDate = function () {
+        return d3.min(this.entries, function (entry) {
+            return format.parse(entry.date);
+        });
+    };
+    this.tickCount = function () {
+        var maxYear = this.maxDate().getFullYear();
+        var minYear = this.minDate().getFullYear();
+        return maxYear - minYear + 1;
+    };
+    this.asDate = function (entry) {
+        return format.parse(entry.date)
+    }
+};
+
+Axis = function (timescale) {
+    this.height = timescale.tickCount() * 50;
+    var yScale = d3.time.scale()
+        .domain([timescale.minDate(), timescale.maxDate()])
+        .range([this.height, 0]);
+    this.svgAxis = d3.svg.axis()
+        .scale(yScale)
+        .orient("left")
+        .ticks(d3.time.years);
+    this.offset = function (entry) {
+        return yScale(timescale.asDate(entry));
+    }
+};
+
 Template.timeline.rendered = function () {
     this.autorun(function () {
         var visualizationDiv = d3.select('#visualization');
@@ -7,33 +44,17 @@ Template.timeline.rendered = function () {
         }
         var events = HistoricalEvents.find().fetch();
         var format = d3.time.format("%Y-%m-%d");
+        var timescale = new Timescale(events);
+        var timeAxis = new Axis(timescale);
         //Width and height
-        var width = 500;
-        var height = d3.max(events, function (entry) {
-            return format.parse(entry.date);
-        }).getTime() / 1000000000;
         var xPadding = 100;
         var yPadding = 15;
         var circleRadius = 2;
 
-        var yScale = d3.time.scale()
-            .domain(
-            [d3.min(events, function (e) {
-                return format.parse(e.date);
-            }),
-                d3.max(events, function (e) {
-                    return format.parse(e.date);
-                })])
-            .range([height - yPadding, 0]);
-
-        var yAxis = d3.svg.axis()
-            .scale(yScale)
-            .orient("left")
-            .ticks(d3.time.years);
         //Create SVG element
         var svg = visualizationDiv.append('svg')
-            .attr("width", width)
-            .attr("height", height + yPadding);
+            .attr("width", 500)
+            .attr("height", timeAxis.height + 2*yPadding);
 
         var mark = svg.selectAll()
             .data(events)
@@ -41,7 +62,7 @@ Template.timeline.rendered = function () {
             .append("g")
             .attr("class", "mark")
             .attr("transform", function (e) {
-                return "translate(" + xPadding + ", " + (yPadding + yScale(format.parse(e.date))) + ")"
+                return "translate(" + xPadding + ", " + (yPadding + timeAxis.offset(e)) + ")"
             });
 
         mark.append("circle")
@@ -59,7 +80,7 @@ Template.timeline.rendered = function () {
         svg.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(" + xPadding + "," + yPadding + ")")
-            .call(yAxis);
+            .call(timeAxis.svgAxis);
 
         svg.selectAll(".mark")
             .on("mouseover", function (data, index) {
@@ -82,7 +103,6 @@ Template.timeline.rendered = function () {
             })
             .on("mouseout", function (data, index) {
                 d3.selectAll(".mark").style("fill", null).style("font-weight", null);
-                ;
             });
     });
-}
+};
