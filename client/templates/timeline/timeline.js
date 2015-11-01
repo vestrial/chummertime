@@ -83,14 +83,8 @@ Template.timeline.rendered = function () {
                 d3.select(this).style("fill", "red");
                 var allMarks = d3.selectAll(".mark");
                 var editions = allMarks.filter(function (candidate, index) {
-                    var candidateLabels = d3.set(candidate.labels);
-                    for (i = 0; i < data.labels.length; i++) {
-                        var dataLabel = data.labels[i];
-                        if (candidateLabels.has(dataLabel)) {
-                            return true;
-                        }
-                    }
-                    return false;
+                    var intersection  = _.intersection(data.labels, candidate.labels);
+                    return !(_.isEmpty(intersection));
                 });
                 editions.each(function (data, index) {
                     var mark = d3.select(this);
