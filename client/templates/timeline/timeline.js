@@ -39,7 +39,6 @@ Template.timeline.rendered = function () {
             return;
         }
         var events = HistoricalEvents.find().fetch();
-        var format = d3.time.format("%Y-%m-%d");
         var timescale = new Timescale(events);
         var timeAxis = new Axis(timescale);
         //Width and height
