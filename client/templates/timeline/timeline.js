@@ -75,22 +75,26 @@ Template.timeline.rendered = function () {
         svg.append("g")
             .attr("class", "axis")
             .attr("transform", "translate(" + xPadding + "," + yPadding + ")")
-            .call(timeAxis.svgAxis);
-
-        svg.selectAll(".mark")
-            .on("mouseover", function (data, index) {
-                d3.select(this).classed("current", true);
-                var allMarks = d3.selectAll(".mark");
-                var editions = allMarks.filter(function (candidate, index) {
-                    var intersection  = _.intersection(data.labels, candidate.labels);
-                    return !(_.isEmpty(intersection));
-                });
-                editions.each(function (data, index) {
-                    d3.select(this).classed("related", true);
-                });
-            })
-            .on("mouseout", function (data, index) {
-                d3.selectAll(".mark").classed({"current": false, "related":false});
-            });
+            .call(timeAxis.svgAxis);     
     });
 };
+
+Template.timeline.events({
+    'mouseover .mark': function(event){
+        var selection = d3.select(event.currentTarget);
+        selection.classed("current", true);
+        var selectionLabels = selection.datum().labels;
+        var allMarks = d3.selectAll(".mark");
+        var relatedMarks = allMarks.filter(function (candidate) {
+            var intersection  = _.intersection(selectionLabels, candidate.labels);
+            return !(_.isEmpty(intersection));
+        });
+        relatedMarks.each(function() {
+            d3.select(this).classed("related", true);
+        });
+    },
+    'mouseout .mark': function(){
+        d3.selectAll(".mark").classed({"current": false, "related":false}); 
+    }
+});    
+    
