@@ -1,24 +1,20 @@
 Timescale = function (events) {
     this.entries = events;
     var format = d3.time.format("%Y-%m-%d");
+    this.asDate = function (entry) {
+        return format.parse(entry.date)
+    }
     this.maxDate = function () {
-        return d3.max(this.entries, function (entry) {
-            return format.parse(entry.date);
-        });
+        return d3.max(this.entries, this.asDate);
     };
     this.minDate = function () {
-        return d3.min(this.entries, function (entry) {
-            return format.parse(entry.date);
-        });
+        return d3.min(this.entries, this.asDate);
     };
     this.tickCount = function () {
         var maxYear = this.maxDate().getFullYear();
         var minYear = this.minDate().getFullYear();
         return maxYear - minYear + 1;
     };
-    this.asDate = function (entry) {
-        return format.parse(entry.date)
-    }
 };
 
 Axis = function (timescale) {
