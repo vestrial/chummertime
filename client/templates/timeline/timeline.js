@@ -80,19 +80,18 @@ Template.timeline.rendered = function () {
 
         svg.selectAll(".mark")
             .on("mouseover", function (data, index) {
-                d3.select(this).style("fill", "red");
+                d3.select(this).classed("current", true);
                 var allMarks = d3.selectAll(".mark");
                 var editions = allMarks.filter(function (candidate, index) {
                     var intersection  = _.intersection(data.labels, candidate.labels);
                     return !(_.isEmpty(intersection));
                 });
                 editions.each(function (data, index) {
-                    var mark = d3.select(this);
-                    mark.style("font-weight", "bold")
+                    d3.select(this).classed("related", true);
                 });
             })
             .on("mouseout", function (data, index) {
-                d3.selectAll(".mark").style("fill", null).style("font-weight", null);
+                d3.selectAll(".mark").classed({"current": false, "related":false});
             });
     });
 };

@@ -16,6 +16,14 @@
     fill: black;
 }
 
+.mark.current {
+    fill: red;
+}
+
+.mark.related {
+    font-weight: bold;
+}
+
 h1 {
     font-family: sans-serif;
 }
