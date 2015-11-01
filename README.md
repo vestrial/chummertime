@@ -1,4 +1,4 @@
 # Chummertime
-Chummertime is a timeline of the Shadowrun universe, running on meteor and visualized through d3.
+Chummertime shows the fictional timeline of the [Shadowrun](www.shadowrun.com) universe, running on [Meteor](www.meteor.com) and visualized through [D3](http://d3js.org/).
 
-See it at http://chummertime.meteor.com/
+See it live at http://chummertime.meteor.com/.
