@@ -1,5 +1,7 @@
 Template.timeline.rendered = function () {
     this.autorun(function () {
+        var visualizationDiv = d3.select('#visualization');
+        visualizationDiv.empty();
         if (HistoricalEvents.find().count() === 0) {
             return;
         }
@@ -7,9 +9,9 @@ Template.timeline.rendered = function () {
         var format = d3.time.format("%Y-%m-%d");
         //Width and height
         var width = 500;
-        var height = d3.max(events, function (d) {
-            return format.parse(d.date).getTime() / 1000000000;
-        });
+        var height = d3.max(events, function (entry) {
+            return format.parse(entry.date);
+        }).getTime() / 1000000000;
         var xPadding = 100;
         var yPadding = 15;
         var circleRadius = 2;
@@ -28,9 +30,7 @@ Template.timeline.rendered = function () {
             .scale(yScale)
             .orient("left")
             .ticks(d3.time.years);
-//Create SVG element
-        var visualizationDiv = d3.select('#visualization');
-        visualizationDiv.empty();
+        //Create SVG element
         var svg = visualizationDiv.append('svg')
             .attr("width", width)
             .attr("height", height + yPadding);
