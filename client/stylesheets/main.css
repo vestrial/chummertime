@@ -1,4 +1,4 @@
-.main, .event, .timeline {
+.grid-block, .main, .event, .timeline {
     background: #fff;
     border-radius: 3px;
     padding: 10px;
@@ -33,6 +33,35 @@ body {
 
 #spinner {
     height: 300px;
+}
+
+.dropdown-menu span {
+    display: block;
+    padding: 3px 20px;
+    clear: both;
+    line-height: 20px;
+    color: #bbb;
+    white-space: nowrap;
+}
+
+.load-more {
+    display: block;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+    text-align: center;
+    height: 60px;
+    line-height: 60px;
+    margin-bottom: 10px;
+}
+
+.load-more:hover {
+    text-decoration: none;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.events .spinner-container {
+    position: relative;
+    height: 100px;
 }
 
 .jumbotron {
