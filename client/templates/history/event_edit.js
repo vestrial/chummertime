@@ -9,8 +9,7 @@ Template.eventEdit.events({
         }
         Posts.update(currentEventId, {$set: eventProperties}, function (error) {
             if (error) {
-                // display the error to the user
-                alert(error.reason);
+                throwError(error.reason);;
             } else {
                 Router.go('eventsList');
             }
