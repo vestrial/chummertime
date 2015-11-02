@@ -51,6 +51,7 @@
 }
 
 .event .event-content p .date {
+    color: #337ab7;
     display: inline-block;
     margin-right: 5px;
 }
@@ -65,7 +66,10 @@
     font-weight: normal;
     font-size: 14px;
     display: inline-block;
-    color: #0e29b7;
+}
+
+.event.event-content p .details {
+    margin: 0;
 }
 
 .event .event-content span {

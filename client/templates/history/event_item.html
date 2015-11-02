@@ -1,8 +1,15 @@
 <template name="eventItem">
     <div class="event">
         <div class="event-content">
-            <P><span class="date">{{date}}:</span> <span class="title">{{title}}</span>
-                {{#if labels}} - <span class="labels">{{labels}}</span>{{/if}}</P>
+            <P>
+                <span class="date">{{date}}:</span>
+                <span class="title">{{title}}</span>
+            </P>
+            <P class="details">
+                {{#if labels}}<span class="labels">{{labels}}</span>{{/if}}
+                {{#if currentUser}}<a href="{{pathFor 'eventEdit'}}">Edit</a>{{/if}}
+            </P>
+
         </div>
     </div>
 </template>
