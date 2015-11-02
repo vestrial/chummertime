@@ -32,4 +32,14 @@ body {
 }
 
 #spinner {
-    height: 300px; }
+    height: 300px;
+}
+
+.jumbotron {
+    text-align: center;
+}
+
+.jumbotron h2 {
+    font-size: 60px;
+    font-weight: 100;
+}
