@@ -1,0 +1,79 @@
+
+.event {
+    /* For modern browsers */
+    /* For IE 6/7 (trigger hasLayout) */
+    *zoom: 1;
+    position: relative;
+    opacity: 1;
+}
+
+.event:before, .event:after {
+    content: "";
+    display: table;
+}
+
+.event:after {
+    clear: both;
+}
+
+.event.invisible {
+    opacity: 0;
+}
+
+.event.instant {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+}
+
+.event.animate {
+    -webkit-transition: all 300ms 0ms;
+    -moz-transition: all 300ms 0ms ease-in;
+    -o-transition: all 300ms 0ms ease-in;
+    transition: all 300ms 0ms ease-in;
+}
+
+.event .upvote {
+    display: block;
+    margin: 7px 12px 0 0;
+    float: left;
+}
+
+.event .event-content {
+    float: left;
+}
+
+.event .event-content p {
+    margin: 0;
+    line-height: 1.4;
+    font-size: 18px;
+}
+
+.event .event-content p .date {
+    display: inline-block;
+    margin-right: 5px;
+}
+
+.event .event-content p .title {
+    font-weight: normal;
+    display: inline-block;
+    color: #aaaaaa;
+}
+
+.event .event-content p .labels {
+    font-weight: normal;
+    font-size: 14px;
+    display: inline-block;
+    color: #0e29b7;
+}
+
+.event .event-content span {
+    margin: 0;
+}
+
+.event .discuss {
+    display: block;
+    float: right;
+    margin-top: 7px;
+}
