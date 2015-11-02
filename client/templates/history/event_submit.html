@@ -3,7 +3,7 @@
         <div class="form-group {{errorClass 'date'}}">
             <label class="control-label" for="date">Date</label>
             <div class="controls">
-                <input name="date" id="url" type="text" value="" placeholder="When did it happen" class="form-control"/>
+                <input name="date" id="url" type="text" value="" placeholder="When did it happen? (yyyy-mm-dd)" class="form-control"/>
             </div>
             <span class="help-block">{{errorMessage 'date'}}</span>
         </div>
@@ -17,7 +17,7 @@
         <div class="form-group">
             <label class="control-label" for="labels">Labels</label>
             <div class="controls">
-                <input name="title" id="labels" type="text" value="" placeholder="Comma separated labels" class="form-control"/>
+                <input name="title" id="labels" type="text" value="" placeholder="Labels (comma separated)" class="form-control"/>
             </div>
         </div>
         <input type="submit" value="Submit" class="btn btn-primary"/>
