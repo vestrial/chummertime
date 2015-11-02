@@ -33,23 +33,15 @@ Axis = function (timescale) {
 
 Template.timeline.rendered = function () {
     this.autorun(function () {
-        var visualizationDiv = d3.select('#visualization');
-        visualizationDiv.empty();
-        if (HistoricalEvents.find().count() === 0) {
-            return;
-        }
+        d3.selectAll("svg > *").remove();
         var events = HistoricalEvents.find().fetch();
         var timescale = new Timescale(events);
         var timeAxis = new Axis(timescale);
-        //Width and height
         var xPadding = 100;
         var yPadding = 15;
         var circleRadius = 2;
 
-        //Create SVG element
-        var svg = visualizationDiv.append('svg')
-            .attr("width", 500)
-            .attr("height", timeAxis.height + 2*yPadding);
+        var svg = d3.select('svg').attr("width", 500).attr("height", timeAxis.height + 2*yPadding);
 
         var mark = svg.selectAll()
             .data(events)
