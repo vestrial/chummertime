@@ -1,6 +1,7 @@
 Template.eventSubmit.onCreated(function () {
     Session.set('eventSubmitErrors', {});
 });
+
 Template.eventSubmit.helpers({
     errorMessage: function (field) {
         return Session.get('eventSubmitErrors')[field];

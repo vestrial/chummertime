@@ -1,3 +1,16 @@
+Template.eventEdit.onCreated(function () {
+    Session.set('eventEditErrors', {});
+});
+
+Template.eventEdit.helpers({
+    errorMessage: function (field) {
+        return Session.get('eventEditErrors')[field];
+    },
+    errorClass: function (field) {
+        return !!Session.get('eventEditErrors')[field] ? 'has-error' : '';
+    }
+});
+
 Template.eventEdit.events({
     'submit form': function (e) {
         e.preventDefault();
@@ -7,9 +20,16 @@ Template.eventEdit.events({
             title: $(e.target).find('[name=title]').val(),
             labels: $(e.target).find('[name=labels]').val()
         }
+
+        var errors = validateEvent(eventProperties);
+        if (errors.title || errors.date)
+            return Session.set('eventEditErrors', errors);
+
+
         Posts.update(currentEventId, {$set: eventProperties}, function (error) {
             if (error) {
-                throwError(error.reason);;
+                throwError(error.reason);
+                ;
             } else {
                 Router.go('eventsList');
             }
